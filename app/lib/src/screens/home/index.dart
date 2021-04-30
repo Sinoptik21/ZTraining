@@ -1,6 +1,5 @@
 // home screen contents
 import 'package:app/src/config/image_constants.dart';
-
 import 'package:app/src/utils/app_state_notifier.dart';
 import 'package:app/src/widgets/cache_image_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:shared/main.dart';
 import 'package:app/src/config/string_constants.dart' as string_constants;
+import 'package:app/src/screens/bookstore/book_card.dart';
 
 class HomeScreen extends StatelessWidget {
   // ignore: close_sinks
@@ -16,14 +16,26 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bookstoreProvider = Provider.of<FirebaseCRUDoperations>(context);
     authenticationBloc.add(GetUserData());
+    List<BookStore> bookstore;
+    // TODO: что такое WillPopScope?
     return WillPopScope(
         onWillPop: () async => false,
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            cubit: authenticationBloc,
+            bloc: authenticationBloc,
             builder: (BuildContext context, AuthenticationState state) {
               if (state is SetUserData) {
                 return Scaffold(
+                  floatingActionButton: FloatingActionButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/addBooks');
+                    },
+                    child: Icon(
+                      Icons.add,
+                      size: 24,
+                    ),
+                  ),
                   appBar: AppBar(
                     centerTitle: true,
                     title: Text(
@@ -38,8 +50,28 @@ class HomeScreen extends StatelessWidget {
                           }),
                     ],
                   ),
-                  body: Center(
-                    child: Text('/home'),
+                  body: Container(
+                    child: FutureBuilder<List<BookStore>>(
+                      future: bookstoreProvider.fetchBookStores(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<BookStore>> snapshot) {
+                        if (snapshot.hasData) {
+                          bookstore = snapshot.data;
+                          return GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 0.5, crossAxisCount: 2),
+                            itemCount: bookstore.length,
+                            itemBuilder: (buildContext, index) =>
+                                BookCard(bookStoreDetails: bookstore[index]),
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
                   ),
                   drawer: Drawer(
                     child: ListView(
@@ -59,8 +91,7 @@ class HomeScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(50),
                                         color: Colors.white),
                                     child: CachedImage(
-                                      imageUrl:
-                                          state.currentUserData.data.avatar,
+                                      imageUrl: state.avatar,
                                       fit: BoxFit.fitWidth,
                                       errorWidget: Image.network(
                                         AllImages().kDefaultImage,
@@ -89,16 +120,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         ListTile(
-                          title: Text(
-                              '${state.currentUserData.data.firstName} ${state.currentUserData.data.lastName}',
-                              style: Theme.of(context).textTheme.bodyText2),
-                        ),
-                        ListTile(
-                          title: Text(state.currentUserData.data.email,
-                              style: Theme.of(context).textTheme.bodyText2),
-                        ),
-                        ListTile(
-                          title: Text(state.currentUserData.ad.company,
+                          title: Text(state.email,
                               style: Theme.of(context).textTheme.bodyText2),
                         ),
                       ],

@@ -12,6 +12,7 @@ class CachedImage extends StatelessWidget {
     this.errorWidget,
   })  : assert(imageUrl != null),
         super(key: key);
+  // TODO: что такое assert?
 
   final String imageUrl;
   final BoxFit fit;

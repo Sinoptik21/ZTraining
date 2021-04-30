@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
         backgroundColor: ColorConstants.secondaryAppColor,
         body: BlocListener<AuthenticationBloc, AuthenticationState>(
-          cubit: authenticationBloc,
+          bloc: authenticationBloc,
           listener: (BuildContext context, AuthenticationState state) {
             if (state is AppAutheticated) {
               Navigator.pushNamed(context, '/home');
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
             }
           },
           child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-              cubit: authenticationBloc,
+              bloc: authenticationBloc,
               builder: (BuildContext context, AuthenticationState state) {
                 return Center(child: Image.asset(AllImages().logo));
               }),

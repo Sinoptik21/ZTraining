@@ -37,14 +37,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         body: WillPopScope(
       onWillPop: () async => false,
       child: BlocListener<AuthenticationBloc, AuthenticationState>(
-        cubit: authenticationBloc,
+        bloc: authenticationBloc,
         listener: (context, state) {
           if (state is AuthenticationFailure) {
             _showError(state.message);
           }
         },
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            cubit: authenticationBloc,
+            bloc: authenticationBloc,
             builder: (BuildContext context, AuthenticationState state) {
               return SafeArea(
                 child: Stack(
@@ -55,7 +55,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         children: [
                           Center(
                               child: Text(
-                            showLoginForm ? 'LOGIN' : 'SIGN UP',
+                            showLoginForm ? 'ВХОД' : 'РЕГИСТРАЦИЯ',
                             style: Theme.of(context).textTheme.headline2,
                           )),
                           Padding(
@@ -80,20 +80,25 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                       SizedBox(
                                         height: 38,
                                       ),
-                                      Text('Already have an account?'),
+                                      Text('Есть аккаунт?'),
                                       SizedBox(
                                         height: 8,
                                       ),
-                                      RaisedButton(
-                                          color: Theme.of(context).primaryColor,
-                                          textColor: Colors.white,
-                                          padding: const EdgeInsets.all(16),
-                                          shape: new RoundedRectangleBorder(
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      8.0)),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary:
+                                                Theme.of(context).primaryColor,
+                                            textStyle: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                            padding: const EdgeInsets.all(16),
+                                            shape: new RoundedRectangleBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        8.0)),
+                                          ),
                                           child: Text(
-                                            'Login',
+                                            'Вход',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText1,
@@ -125,7 +130,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 });
                               },
                             ),
-                          )
+                          ),
                   ],
                 ),
               );

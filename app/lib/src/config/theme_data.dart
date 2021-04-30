@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'color_constants.dart';
 
@@ -21,6 +22,8 @@ class ThemeConfig {
         ? Typography.blackMountainView
         : Typography.whiteMountainView;
 
+    final fontFamily = GoogleFonts.openSans().fontFamily;
+
     return ThemeData(
       brightness: brightness,
       buttonColor: buttonBackground,
@@ -40,9 +43,11 @@ class ThemeConfig {
       backgroundColor: background,
       primaryColor: accentColor,
       accentColor: accentColor,
-      textSelectionColor: accentColor,
-      textSelectionHandleColor: accentColor,
-      cursorColor: accentColor,
+      textSelectionTheme: TextSelectionThemeData(
+        selectionColor: accentColor,
+        selectionHandleColor: accentColor,
+        cursorColor: accentColor,
+      ),
       toggleableActiveColor: accentColor,
       appBarTheme: AppBarTheme(
         brightness: brightness,
@@ -51,6 +56,7 @@ class ThemeConfig {
           bodyText1: baseTextTheme.bodyText1.copyWith(
             color: secondaryText,
             fontSize: 18,
+            fontFamily: fontFamily,
           ),
         ),
         iconTheme: IconThemeData(
@@ -88,7 +94,7 @@ class ThemeConfig {
       inputDecorationTheme: InputDecorationTheme(
         errorStyle: TextStyle(color: error),
         labelStyle: TextStyle(
-          fontFamily: '',
+          fontFamily: fontFamily,
           fontWeight: FontWeight.w600,
           fontSize: 16.0,
           color: primaryText.withOpacity(0.5),
@@ -99,71 +105,84 @@ class ThemeConfig {
           fontWeight: FontWeight.w300,
         ),
       ),
-      fontFamily: '',
+      fontFamily: fontFamily,
       textTheme: TextTheme(
         headline1: baseTextTheme.headline1.copyWith(
           color: primaryText,
           fontSize: 34.0,
           fontWeight: FontWeight.bold,
+          fontFamily: fontFamily,
         ),
         headline2: baseTextTheme.headline2.copyWith(
           color: primaryText,
           fontSize: 22,
           fontWeight: FontWeight.bold,
+          fontFamily: fontFamily,
         ),
         headline3: baseTextTheme.headline3.copyWith(
           color: secondaryText,
           fontSize: 20,
           fontWeight: FontWeight.w600,
+          fontFamily: fontFamily,
         ),
         headline4: baseTextTheme.headline4.copyWith(
           color: primaryText,
           fontSize: 18,
           fontWeight: FontWeight.w600,
+          fontFamily: fontFamily,
         ),
         headline5: baseTextTheme.headline5.copyWith(
           color: primaryText,
           fontSize: 16,
           fontWeight: FontWeight.w700,
+          fontFamily: fontFamily,
         ),
         headline6: baseTextTheme.headline6.copyWith(
           color: primaryText,
           fontSize: 14,
           fontWeight: FontWeight.w700,
+          fontFamily: fontFamily,
         ),
         bodyText1: baseTextTheme.bodyText1.copyWith(
           color: secondaryText,
           fontSize: 15,
+          fontFamily: fontFamily,
         ),
         bodyText2: baseTextTheme.bodyText2.copyWith(
           color: primaryText,
           fontSize: 12,
           fontWeight: FontWeight.w400,
+          fontFamily: fontFamily,
         ),
         button: baseTextTheme.button.copyWith(
           color: primaryText,
           fontSize: 12.0,
           fontWeight: FontWeight.w700,
+          fontFamily: fontFamily,
         ),
         caption: baseTextTheme.caption.copyWith(
           color: primaryText,
           fontSize: 11.0,
           fontWeight: FontWeight.w300,
+          fontFamily: fontFamily,
         ),
         overline: baseTextTheme.overline.copyWith(
-          color: secondaryText,
-          fontSize: 11.0,
+          color: primaryText,
+          fontSize: 12.0,
           fontWeight: FontWeight.w500,
+          fontFamily: fontFamily,
         ),
         subtitle1: baseTextTheme.subtitle1.copyWith(
           color: primaryText,
           fontSize: 16.0,
           fontWeight: FontWeight.w700,
+          fontFamily: fontFamily,
         ),
         subtitle2: baseTextTheme.subtitle2.copyWith(
           color: secondaryText,
           fontSize: 11.0,
           fontWeight: FontWeight.w500,
+          fontFamily: fontFamily,
         ),
       ),
     );
